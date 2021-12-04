@@ -21,15 +21,27 @@ const showDefaultWeather = () => {
       // console.log(showTemperature);
       console.log(storeWeatherData);
       const showContentOfWeather = weatherContent.forEach((item) => {
-        const divW = document.createElement("div");
+        const containerDivForAll = document.createElement("div");
+        const options = {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        };
+        const dateInTimestamp = new Date(storeWeatherData.current.dt * 1000);
+        const formattedDate = new Intl.DateTimeFormat("en-GB", options).format(
+          dateInTimestamp
+        );
         switch (item) {
           case "date":
-            divW.textContent = new Date(storeWeatherData.current.dt);
-            weatherPageData.appendChild(divW);
+            containerDivForAll.textContent = formattedDate;
+            containerDivForAll.className = `weather-${item}-container`;
+            weatherPageData.appendChild(containerDivForAll);
             break;
           case "temp":
-            divW.textContent = `${storeWeatherData.current.temp}\xB0C`;
-            weatherPageInfo.appendChild(divW);
+            containerDivForAll.textContent = `${storeWeatherData.current.temp}\xB0C`;
+            containerDivForAll.className = `weather-${item}-container`;
+            weatherPageInfo.appendChild(containerDivForAll);
             break;
         }
       });
