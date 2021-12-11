@@ -40,10 +40,10 @@ const showDefaultWeather = () => {
             break;
         }
       });
-      return displayWeatherRetrieved;
     }
     displayDefaultWeather();
   });
+  return displayWeatherRetrieved;
 };
 
 const showContentOfWeather = (fetchedWeather) => {
