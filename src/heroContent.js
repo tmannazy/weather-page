@@ -1,7 +1,13 @@
-const weatherContent = ["date", "temp", "humidity", "wind_speed", "feels_like"];
+const weatherContent = [
+  "date",
+  "temp",
+  "humidity",
+  "wind_speed",
+  "feels_like",
+  "time",
+];
 const displayWeatherRetrieved = document.createElement("div");
 const weatherPageData = document.createElement("div");
-// const displayWeatherRetrieved = document.createElement("div");
 
 displayWeatherRetrieved.className = "weather-container";
 
@@ -50,16 +56,30 @@ const showContentOfWeather = (fetchedWeather) => {
   displayWeatherRetrieved.textContent = "";
   weatherContent.forEach((item) => {
     const containerDivForAll = document.createElement("div");
-    const options = {
+    const dateOptions = {
       weekday: "long",
       year: "numeric",
       month: "long",
       day: "numeric",
     };
+
+    const timeOptions = {
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
+      timeZone: fetchedWeather.timezone,
+    };
+
     const dateInTimestamp = new Date(fetchedWeather.current.dt * 1000);
-    const formattedDate = new Intl.DateTimeFormat("en-GB", options).format(
+    console.log(dateInTimestamp);
+    const formattedDate = new Intl.DateTimeFormat("en-GB", dateOptions).format(
       dateInTimestamp
     );
+    const fetchedLocationTime = new Intl.DateTimeFormat(
+      "en-US",
+      timeOptions
+    ).format(dateInTimestamp);
+
     switch (item) {
       case "date":
         containerDivForAll.textContent = formattedDate;
@@ -68,6 +88,11 @@ const showContentOfWeather = (fetchedWeather) => {
         break;
       case "temp":
         containerDivForAll.textContent = `${fetchedWeather.current.temp}\xB0C`;
+        containerDivForAll.className = `weather-${item}-container`;
+        displayWeatherRetrieved.appendChild(containerDivForAll);
+        break;
+      case "time":
+        containerDivForAll.textContent = fetchedLocationTime;
         containerDivForAll.className = `weather-${item}-container`;
         displayWeatherRetrieved.appendChild(containerDivForAll);
         break;
