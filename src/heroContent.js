@@ -8,11 +8,17 @@ const weatherContent = [
 ];
 const displayWeatherRetrieved = document.createElement("div");
 const weatherPageData = document.createElement("div");
+const weatherPageSecondData = document.createElement("div");
 
 displayWeatherRetrieved.className = "weather-container";
+weatherPageData.className = "weather-data-group-one";
+weatherPageSecondData.className = "weather-data-group-two";
 
 const showDefaultWeather = () => {
   displayWeatherRetrieved.textContent = "";
+  weatherPageData.textContent = "";
+  weatherPageSecondData.textContent = "";
+
   document.addEventListener("DOMContentLoaded", () => {
     async function displayDefaultWeather() {
       try {
@@ -41,12 +47,12 @@ const showDefaultWeather = () => {
             case "date":
               containerDivForAll.textContent = formattedDate;
               containerDivForAll.className = `weather-${item}-container`;
-              displayWeatherRetrieved.appendChild(containerDivForAll);
+              weatherPageData.appendChild(containerDivForAll);
               break;
             case "temp":
               containerDivForAll.textContent = `${storeWeatherData.current.temp}\xB0C`;
               containerDivForAll.className = `weather-${item}-container`;
-              displayWeatherRetrieved.appendChild(containerDivForAll);
+              weatherPageData.appendChild(containerDivForAll);
               break;
           }
         });
@@ -58,11 +64,15 @@ const showDefaultWeather = () => {
     }
     displayDefaultWeather();
   });
+  displayWeatherRetrieved.append(weatherPageData);
   return displayWeatherRetrieved;
 };
 
 const showContentOfWeather = (fetchedWeather) => {
   displayWeatherRetrieved.textContent = "";
+  weatherPageData.textContent = "";
+  weatherPageSecondData.textContent = "";
+
   weatherContent.forEach((item) => {
     const containerDivForAll = document.createElement("div");
     const dateOptions = {
@@ -92,20 +102,21 @@ const showContentOfWeather = (fetchedWeather) => {
       case "date":
         containerDivForAll.textContent = formattedDate;
         containerDivForAll.className = `weather-${item}-container`;
-        displayWeatherRetrieved.appendChild(containerDivForAll);
+        weatherPageData.appendChild(containerDivForAll);
         break;
       case "time":
         containerDivForAll.textContent = fetchedLocationTime;
         containerDivForAll.className = `weather-${item}-container`;
-        displayWeatherRetrieved.appendChild(containerDivForAll);
+        weatherPageData.appendChild(containerDivForAll);
         break;
       case "temp":
         containerDivForAll.textContent = `${fetchedWeather.current.temp}\xB0C`;
         containerDivForAll.className = `weather-${item}-container`;
-        displayWeatherRetrieved.appendChild(containerDivForAll);
+        weatherPageData.appendChild(containerDivForAll);
         break;
     }
   });
+  displayWeatherRetrieved.append(weatherPageData);
   return displayWeatherRetrieved;
 };
 
