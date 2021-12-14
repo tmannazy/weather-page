@@ -16,18 +16,20 @@ const showDefaultWeather = () => {
   document.addEventListener("DOMContentLoaded", () => {
     async function displayDefaultWeather() {
       try {
+        await new Promise((resolve, reject) => setTimeout(resolve, 1000));
         const weatherData = await fetch(
           "https://api.openweathermap.org/data/2.5/onecall?lat=51.51&lon=-0.13&units=metric&appid=42cb9ecb74688a62504925b13afb6382",
           { mode: "cors" }
         );
+
         const storeWeatherData = await weatherData.json();
         // console.log(storeWeatherData);
         const showContentOfWeather = weatherContent.forEach((item) => {
           const containerDivForAll = document.createElement("div");
           const options = {
-            weekday: "long",
+            weekday: "short",
             year: "numeric",
-            month: "long",
+            month: "short",
             day: "numeric",
           };
           const dateInTimestamp = new Date(storeWeatherData.current.dt * 1000);
@@ -64,9 +66,9 @@ const showContentOfWeather = (fetchedWeather) => {
   weatherContent.forEach((item) => {
     const containerDivForAll = document.createElement("div");
     const dateOptions = {
-      weekday: "long",
+      weekday: "short",
       year: "numeric",
-      month: "long",
+      month: "short",
       day: "numeric",
     };
 
@@ -78,11 +80,11 @@ const showContentOfWeather = (fetchedWeather) => {
     };
 
     const dateInTimestamp = new Date(fetchedWeather.current.dt * 1000);
-    const formattedDate = new Intl.DateTimeFormat("en-GB", dateOptions).format(
+    const formattedDate = new Intl.DateTimeFormat("en-US", dateOptions).format(
       dateInTimestamp
     );
     const fetchedLocationTime = new Intl.DateTimeFormat(
-      "en-US",
+      "en-GB",
       timeOptions
     ).format(dateInTimestamp);
 
