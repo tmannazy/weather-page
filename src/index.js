@@ -12,7 +12,7 @@ queryLocation.setAttribute("class", "search");
 errorContainer.setAttribute("class", "error-info");
 searchBtn.textContent = "Search";
 defaultWeatherContainer.append(showDefaultWeather());
-content.append(pageHeader(), queryLocation, searchBtn, defaultWeatherContainer);
+content.append(pageHeader(), defaultWeatherContainer, queryLocation, searchBtn);
 
 searchBtn.addEventListener("click", () => {
   const useVal = queryLocation.value.toLocaleLowerCase();
