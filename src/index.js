@@ -17,33 +17,33 @@ content.append(pageHeader(), queryLocation, searchBtn, defaultWeatherContainer);
 searchBtn.addEventListener("click", () => {
   const useVal = queryLocation.value.toLocaleLowerCase();
   async function displayWeather() {
-    try {
-      const weatherData = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${useVal}&units=imperial&appid=42cb9ecb74688a62504925b13afb6382`
-      );
-      const getWeatherData = await weatherData.json();
-      if (getWeatherData.cod === 200) {
-        displayReceivedData(getWeatherData);
-      } else {
-        errorContainer.textContent = `${getWeatherData.message}. Try again later.`;
-        defaultWeatherContainer.appendChild(errorContainer);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  }
-  async function displayReceivedData(weatherDataReceived) {
-    const longitude = weatherDataReceived.coord.lon;
-    const latitude = weatherDataReceived.coord.lat;
-    const getUserWeatherQuery = await fetch(
-      `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&units=metric&appid=42cb9ecb74688a62504925b13afb6382`,
+    const weatherData = await fetch(
+      `https://api.openweathermap.org/data/2.5/weather?q=${useVal}&units=imperial&appid=42cb9ecb74688a62504925b13afb6382`,
       { mode: "cors" }
     );
-    const parseFetchedUserWeatherQuery = await getUserWeatherQuery.json();
-    defaultWeatherContainer.textContent = "";
-    defaultWeatherContainer.append(
-      showContentOfWeather(parseFetchedUserWeatherQuery)
-    );
+    const getWeatherData = await weatherData.json();
+    return getWeatherData;
   }
-  displayWeather();
+
+  async function displayReceivedData() {
+    try {
+      const weatherDataReceived = await displayWeather();
+      const longitude = weatherDataReceived.coord.lon;
+      const latitude = weatherDataReceived.coord.lat;
+      const getUserWeatherQuery = await fetch(
+        `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&units=metric&appid=42cb9ecb74688a62504925b13afb6382`,
+        { mode: "cors" }
+      );
+      const parseFetchedUserWeatherQuery = await getUserWeatherQuery.json();
+      defaultWeatherContainer.textContent = "";
+      defaultWeatherContainer.append(
+        showContentOfWeather(parseFetchedUserWeatherQuery)
+      );
+    } catch (error) {
+      errorContainer.textContent =
+        "Location not found! Search by name of City or Country.";
+      defaultWeatherContainer.appendChild(errorContainer);
+    }
+  }
+  displayReceivedData();
 });
