@@ -23,7 +23,7 @@ searchBtn.addEventListener("click", () => {
       );
       const getWeatherData = await weatherData.json();
       if (getWeatherData.cod === 200) {
-        useWeather(getWeatherData);
+        displayReceivedData(getWeatherData);
       } else {
         errorContainer.textContent = `${getWeatherData.message}. Try again later.`;
         defaultWeatherContainer.appendChild(errorContainer);
@@ -32,18 +32,18 @@ searchBtn.addEventListener("click", () => {
       console.error(error);
     }
   }
-  // async function useWeather(weatherDataReceived) {
-  //   const longitude = getWeatherData.coord.lon;
-  //   const latitude = getWeatherData.coord.lat;
-  //   const getUserWeatherQuery = await fetch(
-  //     `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&units=metric&appid=42cb9ecb74688a62504925b13afb6382`,
-  //     { mode: "cors" }
-  //   );
-  //   const parseFetchedUserWeatherQuery = await getUserWeatherQuery.json();
-  //   defaultWeatherContainer.textContent = "";
-  //   defaultWeatherContainer.append(
-  //     showContentOfWeather(parseFetchedUserWeatherQuery)
-  //   );
-  // }
+  async function displayReceivedData(weatherDataReceived) {
+    const longitude = weatherDataReceived.coord.lon;
+    const latitude = weatherDataReceived.coord.lat;
+    const getUserWeatherQuery = await fetch(
+      `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&units=metric&appid=42cb9ecb74688a62504925b13afb6382`,
+      { mode: "cors" }
+    );
+    const parseFetchedUserWeatherQuery = await getUserWeatherQuery.json();
+    defaultWeatherContainer.textContent = "";
+    defaultWeatherContainer.append(
+      showContentOfWeather(parseFetchedUserWeatherQuery)
+    );
+  }
   displayWeather();
 });
