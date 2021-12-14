@@ -5,6 +5,7 @@ const weatherContent = [
   "wind_speed",
   "feels_like",
   "time",
+  "description",
 ];
 const displayWeatherRetrieved = document.createElement("div");
 const weatherPageData = document.createElement("div");
@@ -28,21 +29,36 @@ const showDefaultWeather = () => {
           { mode: "cors" }
         );
 
-        const storeWeatherData = await weatherData.json();
-        // console.log(storeWeatherData);
+        const getDefaultWeatherData = await weatherData.json();
+        const dateOptions = {
+          weekday: "short",
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+        };
+
+        const timeOptions = {
+          hour: "numeric",
+          minute: "numeric",
+          hour12: true,
+          timeZone: getDefaultWeatherData.timezone,
+        };
+
+        const dateInTimestamp = new Date(
+          getDefaultWeatherData.current.dt * 1000
+        );
+        const formattedDate = new Intl.DateTimeFormat(
+          "en-US",
+          dateOptions
+        ).format(dateInTimestamp);
+        const fetchedLocationTime = new Intl.DateTimeFormat(
+          "en-GB",
+          timeOptions
+        ).format(dateInTimestamp);
+
         const showContentOfWeather = weatherContent.forEach((item) => {
           const containerDivForAll = document.createElement("div");
-          const options = {
-            weekday: "short",
-            year: "numeric",
-            month: "short",
-            day: "numeric",
-          };
-          const dateInTimestamp = new Date(storeWeatherData.current.dt * 1000);
-          const formattedDate = new Intl.DateTimeFormat(
-            "en-GB",
-            options
-          ).format(dateInTimestamp);
+
           switch (item) {
             case "date":
               containerDivForAll.textContent = formattedDate;
@@ -50,7 +66,7 @@ const showDefaultWeather = () => {
               weatherPageData.appendChild(containerDivForAll);
               break;
             case "temp":
-              containerDivForAll.textContent = `${storeWeatherData.current.temp}\xB0C`;
+              containerDivForAll.textContent = `${getDefaultWeatherData.current.temp}\xB0C`;
               containerDivForAll.className = `weather-${item}-container`;
               weatherPageData.appendChild(containerDivForAll);
               break;
@@ -73,32 +89,42 @@ const showContentOfWeather = (fetchedWeather) => {
   weatherPageData.textContent = "";
   weatherPageSecondData.textContent = "";
 
+  const dateOptions = {
+    weekday: "short",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  };
+
+  const timeOptions = {
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
+    timeZone: fetchedWeather.timezone,
+  };
+
+  const dateInTimestamp = new Date(fetchedWeather.current.dt * 1000);
+  const formattedDate = new Intl.DateTimeFormat("en-US", dateOptions).format(
+    dateInTimestamp
+  );
+  const fetchedLocationTime = new Intl.DateTimeFormat(
+    "en-GB",
+    timeOptions
+  ).format(dateInTimestamp);
+
   weatherContent.forEach((item) => {
     const containerDivForAll = document.createElement("div");
-    const dateOptions = {
-      weekday: "short",
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    };
-
-    const timeOptions = {
-      hour: "numeric",
-      minute: "numeric",
-      hour12: true,
-      timeZone: fetchedWeather.timezone,
-    };
-
-    const dateInTimestamp = new Date(fetchedWeather.current.dt * 1000);
-    const formattedDate = new Intl.DateTimeFormat("en-US", dateOptions).format(
-      dateInTimestamp
-    );
-    const fetchedLocationTime = new Intl.DateTimeFormat(
-      "en-GB",
-      timeOptions
-    ).format(dateInTimestamp);
 
     switch (item) {
+      case "description":
+        const obj = fetchedWeather.current.weather[0];
+        Object.entries(obj).forEach(([key, value]) => {
+          if (key === "description")
+            containerDivForAll.textContent = `${value}`;
+        });
+        containerDivForAll.className = `weather-${item}-container`;
+        weatherPageData.appendChild(containerDivForAll);
+        break;
       case "date":
         containerDivForAll.textContent = formattedDate;
         containerDivForAll.className = `weather-${item}-container`;
@@ -110,7 +136,9 @@ const showContentOfWeather = (fetchedWeather) => {
         weatherPageData.appendChild(containerDivForAll);
         break;
       case "temp":
-        containerDivForAll.textContent = `${fetchedWeather.current.temp}\xB0C`;
+        containerDivForAll.textContent = `${Math.ceil(
+          fetchedWeather.current.temp
+        )}\xB0C`;
         containerDivForAll.className = `weather-${item}-container`;
         weatherPageData.appendChild(containerDivForAll);
         break;
