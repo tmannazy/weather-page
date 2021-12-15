@@ -1,4 +1,5 @@
 const weatherContent = [
+  "locationName",
   "date",
   "temp",
   "humidity",
@@ -84,7 +85,7 @@ const showDefaultWeather = () => {
   return displayWeatherRetrieved;
 };
 
-const showContentOfWeather = (fetchedWeather) => {
+const showContentOfWeather = (fetchedWeather, fetchedWeatherName) => {
   displayWeatherRetrieved.textContent = "";
   weatherPageData.textContent = "";
   weatherPageSecondData.textContent = "";
@@ -116,6 +117,11 @@ const showContentOfWeather = (fetchedWeather) => {
     const containerDivForAll = document.createElement("div");
 
     switch (item) {
+      case "locationName":
+        containerDivForAll.textContent = `${fetchedWeatherName}`;
+        containerDivForAll.className = `weather-${item}-container`;
+        weatherPageData.appendChild(containerDivForAll);
+        break;
       case "description":
         const obj = fetchedWeather.current.weather[0];
         Object.entries(obj).forEach(([key, value]) => {
