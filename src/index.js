@@ -15,13 +15,15 @@ defaultWeatherContainer.append(showDefaultWeather());
 content.append(pageHeader(), defaultWeatherContainer, queryLocation, searchBtn);
 
 searchBtn.addEventListener("click", () => {
-  const useVal = queryLocation.value.toLocaleLowerCase();
+  const userQuery = queryLocation.value.toLocaleLowerCase();
+  let fetchedLocationName;
   async function displayWeather() {
     const weatherData = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${useVal}&units=imperial&appid=42cb9ecb74688a62504925b13afb6382`,
+      `https://api.openweathermap.org/data/2.5/weather?q=${userQuery}&units=imperial&appid=42cb9ecb74688a62504925b13afb6382`,
       { mode: "cors" }
     );
     const getWeatherData = await weatherData.json();
+    fetchedLocationName = getWeatherData.name;
     return getWeatherData;
   }
 
@@ -37,7 +39,7 @@ searchBtn.addEventListener("click", () => {
       const parseFetchedUserWeatherQuery = await getUserWeatherQuery.json();
       defaultWeatherContainer.textContent = "";
       defaultWeatherContainer.append(
-        showContentOfWeather(parseFetchedUserWeatherQuery)
+        showContentOfWeather(parseFetchedUserWeatherQuery, fetchedLocationName)
       );
     } catch (error) {
       errorContainer.textContent =
