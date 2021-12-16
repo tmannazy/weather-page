@@ -6,13 +6,24 @@ const queryLocation = document.createElement("input");
 const searchBtn = document.createElement("button");
 const defaultWeatherContainer = document.createElement("section");
 const errorContainer = document.createElement("div");
+const temperatureBtn = document.createElement("button");
+let weatherDataReceivedInFahrenheit;
+let weatherDataReceivedInCelsius;
 
 queryLocation.setAttribute("type", "text");
 queryLocation.setAttribute("class", "search");
 errorContainer.setAttribute("class", "error-info");
+temperatureBtn.setAttribute("class", "temp-toggle-btn");
 searchBtn.textContent = "Search";
+temperatureBtn.textContent = "Display \xB0F";
 defaultWeatherContainer.append(showDefaultWeather());
-content.append(pageHeader(), defaultWeatherContainer, queryLocation, searchBtn);
+content.append(
+  pageHeader(),
+  defaultWeatherContainer,
+  queryLocation,
+  searchBtn,
+  temperatureBtn
+);
 
 searchBtn.addEventListener("click", () => {
   const userQuery = queryLocation.value.toLocaleLowerCase();
@@ -24,6 +35,7 @@ searchBtn.addEventListener("click", () => {
     );
     const getWeatherData = await weatherData.json();
     fetchedLocationName = getWeatherData.name;
+    weatherDataReceivedInFahrenheit = getWeatherData;
     return getWeatherData;
   }
 
@@ -37,6 +49,7 @@ searchBtn.addEventListener("click", () => {
         { mode: "cors" }
       );
       const parseFetchedUserWeatherQuery = await getUserWeatherQuery.json();
+      weatherDataReceivedInCelsius = parseFetchedUserWeatherQuery;
       defaultWeatherContainer.textContent = "";
       defaultWeatherContainer.append(
         showContentOfWeather(parseFetchedUserWeatherQuery, fetchedLocationName)
@@ -48,4 +61,20 @@ searchBtn.addEventListener("click", () => {
     }
   }
   displayReceivedData();
+});
+
+temperatureBtn.addEventListener("click", (e) => {
+  const getTempContainer = document.querySelector(".weather-temp-container");
+
+  if (e.target.textContent === "Display °F") {
+    e.target.textContent = "Display \xB0C";
+    getTempContainer.textContent = `${Math.ceil(
+      weatherDataReceivedInFahrenheit.main.temp
+    )} \xB0F`;
+  } else {
+    e.target.textContent = "Display \xB0F";
+    getTempContainer.textContent = `${Math.ceil(
+      weatherDataReceivedInCelsius.current.temp
+    )} \xB0C`;
+  }
 });
