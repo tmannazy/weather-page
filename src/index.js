@@ -55,9 +55,15 @@ searchBtn.addEventListener("click", () => {
         showContentOfWeather(parseFetchedUserWeatherQuery, fetchedLocationName)
       );
     } catch (error) {
-      errorContainer.textContent =
-        "Location not found! Search by name of City or Country.";
-      defaultWeatherContainer.appendChild(errorContainer);
+      if (defaultWeatherContainer.textContent.match(/\bnetwork error\b/i)) {
+        defaultWeatherContainer.textContent = "";
+        errorContainer.textContent = "Network error! Request unreachable.";
+        defaultWeatherContainer.appendChild(errorContainer);
+      } else {
+        errorContainer.textContent =
+          "Location not found! Search by name of City or Country.";
+        defaultWeatherContainer.appendChild(errorContainer);
+      }
     }
   }
   displayReceivedData();
