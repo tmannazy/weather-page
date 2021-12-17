@@ -59,18 +59,18 @@ const showDefaultWeather = () => {
         ).format(dateInTimestamp);
 
         const showContentOfWeather = weatherContent.forEach((item) => {
-          const containerDivForAll = document.createElement("div");
+          const containerContent = document.createElement("div");
 
           switch (item) {
             case "date":
-              containerDivForAll.textContent = formattedDate;
-              containerDivForAll.className = `weather-${item}-container`;
-              weatherPageData.appendChild(containerDivForAll);
+              containerContent.textContent = formattedDate;
+              containerContent.className = `weather-${item}-container`;
+              weatherPageData.appendChild(containerContent);
               break;
             case "temp":
-              containerDivForAll.textContent = `${getDefaultWeatherData.current.temp}\xB0C`;
-              containerDivForAll.className = `weather-${item}-container`;
-              weatherPageData.appendChild(containerDivForAll);
+              containerContent.textContent = `${getDefaultWeatherData.current.temp}\xB0C`;
+              containerContent.className = `weather-${item}-container`;
+              weatherPageData.appendChild(containerContent);
               break;
           }
         });
@@ -115,54 +115,61 @@ const showContentOfWeather = (fetchedWeather, weatherDataInFahrenheit) => {
   ).format(dateInTimestamp);
 
   weatherContent.forEach((item) => {
-    const containerDivForAll = document.createElement("div");
+    const containerContent = document.createElement("div");
+    const containerTitle = document.createElement("div");
 
     switch (item) {
       case "locationName":
-        containerDivForAll.textContent = `${weatherDataInFahrenheit.name}`;
-        containerDivForAll.className = `weather-${item}-container`;
-        weatherPageData.appendChild(containerDivForAll);
+        containerContent.textContent = `${weatherDataInFahrenheit.name}`;
+        containerContent.className = `weather-${item}-container`;
+        weatherPageData.appendChild(containerContent);
         break;
       case "description":
         const { description } = fetchedWeather.current.weather[0];
-        containerDivForAll.textContent = description;
-        containerDivForAll.className = `weather-${item}-container`;
-        weatherPageData.appendChild(containerDivForAll);
+        containerContent.textContent = description;
+        containerContent.className = `weather-${item}-container`;
+        weatherPageData.appendChild(containerContent);
         break;
       case "date":
-        containerDivForAll.textContent = formattedDate;
-        containerDivForAll.className = `weather-${item}-container`;
-        weatherPageData.appendChild(containerDivForAll);
+        containerContent.textContent = formattedDate;
+        containerContent.className = `weather-${item}-container`;
+        weatherPageData.appendChild(containerContent);
         break;
       case "time":
-        containerDivForAll.textContent = fetchedLocationTime;
-        containerDivForAll.className = `weather-${item}-container`;
-        weatherPageData.appendChild(containerDivForAll);
+        containerContent.textContent = fetchedLocationTime;
+        containerContent.className = `weather-${item}-container`;
+        weatherPageData.appendChild(containerContent);
         break;
       case "temp":
-        containerDivForAll.textContent = `${Math.ceil(
+        containerContent.textContent = `${Math.ceil(
           fetchedWeather.current.temp
         )}\xB0C`;
-        containerDivForAll.className = `weather-${item}-container`;
-        weatherPageData.appendChild(containerDivForAll);
+        containerContent.className = `weather-${item}-container`;
+        weatherPageData.appendChild(containerContent);
         break;
       case "feels_like":
-        containerDivForAll.textContent = `${Math.floor(
+        containerContent.textContent = `${Math.floor(
           fetchedWeather.current.feels_like
         )} \xB0C`;
-        containerDivForAll.className = `weather-${item}-container`;
-        weatherPageSecondData.appendChild(containerDivForAll);
+        containerTitle.textContent = "feels like";
+        containerContent.className = `${item}-container`;
+        containerTitle.className = `${item}-title`;
+        weatherPageSecondData.append(containerTitle, containerContent);
         break;
       case "humidity":
-        containerDivForAll.textContent = `${fetchedWeather.current.humidity}%`;
-        containerDivForAll.className = `weather-${item}-container`;
-        weatherPageSecondData.appendChild(containerDivForAll);
+        containerContent.textContent = `${fetchedWeather.current.humidity}%`;
+        containerTitle.textContent = "humidity";
+        containerContent.className = `${item}-container`;
+        containerTitle.className = `${item}-title`;
+        weatherPageSecondData.append(containerTitle, containerContent);
         break;
       case "wind_speed":
         const speed = fetchedWeather.current.wind_speed * 3.6;
-        containerDivForAll.textContent = `${speed.toFixed(1)} km/h`;
-        containerDivForAll.className = `weather-${item}-container`;
-        weatherPageSecondData.appendChild(containerDivForAll);
+        containerContent.textContent = `${speed.toFixed(1)} km/h`;
+        containerTitle.textContent = "wind speed";
+        containerContent.className = `${item}-container`;
+        containerTitle.className = `${item}-title`;
+        weatherPageSecondData.append(containerTitle, containerContent);
         break;
     }
   });
