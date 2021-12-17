@@ -72,9 +72,7 @@ searchBtn.addEventListener("click", () => {
 
 temperatureBtn.addEventListener("click", (e) => {
   const getTempContainer = document.querySelector(".weather-temp-container");
-  const getFeelsLikeContainer = document.querySelector(
-    ".weather-feels_like-container"
-  );
+  const getFeelsLikeContainer = document.querySelector(".feels_like-container");
 
   if (e.target.textContent === "Display °F") {
     e.target.textContent = "Display \xB0C";
