@@ -64,10 +64,12 @@ async function displayReceivedData(query) {
       defaultWeatherContainer.textContent = "";
       errorContainer.textContent = "Network error! Request unreachable.";
       defaultWeatherContainer.appendChild(errorContainer);
+      loadingImg.style.display = "none";
     } else {
       errorContainer.textContent =
         "Location not found! Search by name of City or Country.";
       defaultWeatherContainer.appendChild(errorContainer);
+      loadingImg.style.display = "none";
     }
   }
 }
