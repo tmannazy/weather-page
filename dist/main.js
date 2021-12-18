@@ -126,7 +126,7 @@ eval("\n\n/* istanbul ignore next  */\nfunction styleTagTransform(css, styleElem
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"pageHeader\": () => (/* binding */ pageHeader)\n/* harmony export */ });\nconst pageHeader = () => {\n  const header = document.createElement(\"header\");\n  const pageIcon = document.createElement(\"img\");\n  const h1 = document.createElement(\"h1\");\n\n  pageIcon.setAttribute(\"src\", \"../dist/87f7f47e922b5771362f.jpg\");\n  pageIcon.classList.add(\"page-icon\");\n  h1.textContent = \"Weather Page\";\n  h1.classList.add(\"page-title\");\n  header.append(pageIcon, h1);\n\n  return header;\n};\n\n\n\n\n//# sourceURL=webpack://weather-page/./src/header.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"pageHeader\": () => (/* binding */ pageHeader)\n/* harmony export */ });\nconst pageHeader = () => {\n  const header = document.createElement(\"header\");\n  const pageIcon = document.createElement(\"img\");\n  const h1 = document.createElement(\"h1\");\n\n  pageIcon.setAttribute(\"src\", \"./87f7f47e922b5771362f.jpg\");\n  pageIcon.classList.add(\"page-icon\");\n  h1.textContent = \"Weather Page\";\n  h1.classList.add(\"page-title\");\n  header.append(pageIcon, h1);\n\n  return header;\n};\n\n\n\n\n//# sourceURL=webpack://weather-page/./src/header.js?");
 
 /***/ }),
 
