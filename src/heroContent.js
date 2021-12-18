@@ -12,15 +12,20 @@ const weatherContent = [
 const displayWeatherRetrieved = document.createElement("div");
 const weatherPageData = document.createElement("div");
 const weatherPageSecondData = document.createElement("div");
+const weatherIcon = document.createElement("div");
+const iconImg = document.createElement("img");
 
 displayWeatherRetrieved.className = "weather-container";
 weatherPageData.className = "weather-data-group-one";
 weatherPageSecondData.className = "weather-data-group-two";
+weatherIcon.className = "weather-main-icon-container";
+iconImg.className = "main-icon";
 
 const showDefaultWeather = () => {
   displayWeatherRetrieved.textContent = "";
   weatherPageData.textContent = "";
   weatherPageSecondData.textContent = "";
+  weatherIcon.textContent = "";
 
   document.addEventListener("DOMContentLoaded", () => {
     async function displayDefaultWeather() {
@@ -90,6 +95,7 @@ const showContentOfWeather = (fetchedWeather, weatherDataInFahrenheit) => {
   displayWeatherRetrieved.textContent = "";
   weatherPageData.textContent = "";
   weatherPageSecondData.textContent = "";
+  weatherIcon.textContent = "";
 
   const dateOptions = {
     weekday: "short",
@@ -109,10 +115,15 @@ const showContentOfWeather = (fetchedWeather, weatherDataInFahrenheit) => {
   const formattedDate = new Intl.DateTimeFormat("en-US", dateOptions).format(
     dateInTimestamp
   );
+
   const fetchedLocationTime = new Intl.DateTimeFormat(
     "en-GB",
     timeOptions
   ).format(dateInTimestamp);
+
+  const { icon } = fetchedWeather.current.weather[0];
+  iconImg.src = `http://openweathermap.org/img/wn/${icon}@2x.png`;
+  weatherIcon.appendChild(iconImg);
 
   weatherContent.forEach((item) => {
     const containerContent = document.createElement("div");
@@ -122,13 +133,13 @@ const showContentOfWeather = (fetchedWeather, weatherDataInFahrenheit) => {
       case "locationName":
         containerContent.textContent = `${weatherDataInFahrenheit.name}`;
         containerContent.className = `weather-${item}-container`;
-        weatherPageData.appendChild(containerContent);
+        weatherIcon.appendChild(containerContent);
         break;
       case "description":
         const { description } = fetchedWeather.current.weather[0];
         containerContent.textContent = description;
         containerContent.className = `weather-${item}-container`;
-        weatherPageData.appendChild(containerContent);
+        weatherIcon.appendChild(containerContent);
         break;
       case "date":
         containerContent.textContent = formattedDate;
@@ -189,7 +200,12 @@ const showContentOfWeather = (fetchedWeather, weatherDataInFahrenheit) => {
         break;
     }
   });
-  displayWeatherRetrieved.append(weatherPageData, weatherPageSecondData);
+
+  displayWeatherRetrieved.append(
+    weatherPageData,
+    weatherIcon,
+    weatherPageSecondData
+  );
   return displayWeatherRetrieved;
 };
 
