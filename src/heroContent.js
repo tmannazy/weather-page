@@ -143,7 +143,7 @@ const showContentOfWeather = (fetchedWeather, weatherDataInFahrenheit) => {
       case "temp":
         containerContent.textContent = `${Math.ceil(
           fetchedWeather.current.temp
-        )}\xB0C`;
+        )} \xB0C`;
         containerContent.className = `weather-${item}-container`;
         weatherPageData.appendChild(containerContent);
         break;

@@ -88,7 +88,9 @@ temperatureBtn.addEventListener("click", (e) => {
     getFeelsLikeContainer.textContent = `${Math.ceil(
       fetchedDataInFahrenheit.main.feels_like
     )} \xB0F`;
-    getWindSpeedContainer.textContent = `${fetchedDataInFahrenheit.wind.speed} mph`;
+    getWindSpeedContainer.textContent = `${Math.ceil(
+      fetchedDataInFahrenheit.wind.speed
+    ).toFixed(1)} mph`;
   } else {
     e.target.textContent = "Display \xB0F";
     getTempContainer.textContent = `${Math.ceil(
