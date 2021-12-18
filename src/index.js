@@ -13,6 +13,7 @@ const defaultWeatherContainer = document.createElement("section");
 const errorContainer = document.createElement("div");
 const temperatureBtn = document.createElement("button");
 const queryContainer = document.createElement("div");
+const loadingImg = document.createElement("img");
 let fetchedDataInFahrenheit;
 let fetchedDataInCelsius;
 
@@ -22,6 +23,7 @@ errorContainer.setAttribute("class", "error-info");
 temperatureBtn.setAttribute("class", "temp-toggle-btn");
 queryContainer.setAttribute("class", "search-box-container");
 searchBtn.setAttribute("class", "search-btn");
+loadingImg.className = "load-img";
 searchBtn.textContent = "Search";
 temperatureBtn.textContent = "Display \xB0F";
 queryContainer.append(queryLocation, searchBtn, temperatureBtn);
@@ -56,6 +58,7 @@ async function displayReceivedData(query) {
         weatherDataInFahrenheit: fetchedDataInFahrenheit,
       })
     );
+    loadingImg.style.display = "none";
   } catch (error) {
     if (defaultWeatherContainer.textContent.match(/\bnetwork error\b/i)) {
       defaultWeatherContainer.textContent = "";
@@ -69,7 +72,14 @@ async function displayReceivedData(query) {
   }
 }
 
+function requestingImg() {
+  loadingImg.src = "./e157bc007c2f7fc44591.webp";
+  loadingImg.style.display = "block";
+  content.append(loadingImg);
+}
+
 searchBtn.addEventListener("click", () => {
+  requestingImg();
   const userQuery = queryLocation.value.toLocaleLowerCase();
   displayReceivedData(userQuery);
 });
@@ -107,6 +117,7 @@ temperatureBtn.addEventListener("click", (e) => {
 document.addEventListener("keydown", (e) => {
   const userQuery = queryLocation.value.toLocaleLowerCase();
   if (e.key === "Enter") {
+    requestingImg();
     displayReceivedData(userQuery);
   }
 });
