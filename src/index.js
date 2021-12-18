@@ -110,3 +110,7 @@ document.addEventListener("keydown", (e) => {
     displayReceivedData(userQuery);
   }
 });
+
+queryLocation.addEventListener("focus", (e) => {
+  e.target.value = "";
+});
