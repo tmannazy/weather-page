@@ -80,7 +80,7 @@ const showContentOfWeather = ({
 
   const dateInTimestamp = new Date(fetchedWeather.current.dt * 1000);
   const formattedDate = new Intl.DateTimeFormat("en-US", dateOptions).format(
-    dateInTimestamp
+    new Date(fetchedWeather.current.sunrise * 1000)
   );
 
   const fetchedLocationTime = new Intl.DateTimeFormat(
