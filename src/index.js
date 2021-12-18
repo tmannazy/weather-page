@@ -1,5 +1,10 @@
 import { pageHeader } from "./header";
 import { showDefaultWeather, showContentOfWeather } from "./heroContent";
+import "./style.css";
+function requireAll(r) {
+  r.keys().forEach(r);
+}
+requireAll(require.context("./images/", true));
 
 const content = document.querySelector(".content");
 const queryLocation = document.createElement("input");
