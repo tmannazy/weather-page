@@ -9,6 +9,7 @@
 body {
     background: url('../dist/ece9ef7c769feae06fd5.jpg');
     background-size: cover;
+    background-position-y: center;
     color: #ffddae;
     font-family: 'IM Fell DW Pica', serif;
     font-size: 1.5rem;
