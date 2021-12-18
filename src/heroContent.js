@@ -171,6 +171,22 @@ const showContentOfWeather = (fetchedWeather, weatherDataInFahrenheit) => {
         containerTitle.className = `${item}-title`;
         weatherPageSecondData.append(containerTitle, containerContent);
         break;
+      case "chanceOfRain":
+        if (!weatherDataInFahrenheit.rain === undefined) {
+          const rain = weatherDataInFahrenheit.rain["1h"];
+          containerContent.textContent = `${rain}%`;
+          containerTitle.textContent = "chance of rain";
+          containerContent.className = `${item}-container`;
+          containerTitle.className = `${item}-title`;
+          weatherPageSecondData.append(containerTitle, containerContent);
+        } else {
+          containerContent.textContent = "0%";
+          containerTitle.textContent = "chance of rain";
+          containerContent.className = `${item}-container`;
+          containerTitle.className = `${item}-title`;
+          weatherPageSecondData.append(containerTitle, containerContent);
+        }
+        break;
     }
   });
   displayWeatherRetrieved.append(weatherPageData, weatherPageSecondData);
