@@ -30,54 +30,19 @@ const showDefaultWeather = () => {
   document.addEventListener("DOMContentLoaded", () => {
     async function displayDefaultWeather() {
       try {
-        await new Promise((resolve, reject) => setTimeout(resolve, 1000));
         const weatherData = await fetch(
-          "https://api.openweathermap.org/data/2.5/onecall?lat=51.51&lon=-0.13&units=metric&appid=42cb9ecb74688a62504925b13afb6382",
+          "https://api.openweathermap.org/data/2.5/onecall?lat=10&lon=8&units=metric&appid=42cb9ecb74688a62504925b13afb6382",
           { mode: "cors" }
         );
-
-        const getDefaultWeatherData = await weatherData.json();
-        const dateOptions = {
-          weekday: "short",
-          year: "numeric",
-          month: "short",
-          day: "numeric",
-        };
-
-        const timeOptions = {
-          hour: "numeric",
-          minute: "numeric",
-          hour12: true,
-          timeZone: getDefaultWeatherData.timezone,
-        };
-
-        const dateInTimestamp = new Date(
-          getDefaultWeatherData.current.dt * 1000
+        const defaultWeatherName = await fetch(
+          "https://api.openweathermap.org/data/2.5/weather?lat=10&lon=8&units=metric&appid=42cb9ecb74688a62504925b13afb6382",
+          { mode: "cors" }
         );
-        const formattedDate = new Intl.DateTimeFormat(
-          "en-US",
-          dateOptions
-        ).format(dateInTimestamp);
-        const fetchedLocationTime = new Intl.DateTimeFormat(
-          "en-GB",
-          timeOptions
-        ).format(dateInTimestamp);
-
-        const showContentOfWeather = weatherContent.forEach((item) => {
-          const containerContent = document.createElement("div");
-
-          switch (item) {
-            case "date":
-              containerContent.textContent = formattedDate;
-              containerContent.className = `weather-${item}-container`;
-              weatherPageData.appendChild(containerContent);
-              break;
-            case "temp":
-              containerContent.textContent = `${getDefaultWeatherData.current.temp}\xB0C`;
-              containerContent.className = `weather-${item}-container`;
-              weatherPageData.appendChild(containerContent);
-              break;
-          }
+        const getDefaultWeatherData = await weatherData.json();
+        const storeDefaultWeatherName = await defaultWeatherName.json();
+        showContentOfWeather({
+          fetchedWeather: getDefaultWeatherData,
+          weatherDataInFahrenheit: storeDefaultWeatherName,
         });
       } catch (error) {
         displayWeatherRetrieved.textContent =
@@ -87,11 +52,13 @@ const showDefaultWeather = () => {
     }
     displayDefaultWeather();
   });
-  displayWeatherRetrieved.append(weatherPageData);
   return displayWeatherRetrieved;
 };
 
-const showContentOfWeather = (fetchedWeather, weatherDataInFahrenheit) => {
+const showContentOfWeather = ({
+  fetchedWeather,
+  weatherDataInFahrenheit,
+} = {}) => {
   displayWeatherRetrieved.textContent = "";
   weatherPageData.textContent = "";
   weatherPageSecondData.textContent = "";
