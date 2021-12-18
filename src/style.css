@@ -32,7 +32,7 @@ header {
 .page-title {
     color: #ff43ff;
     font-size: 2.5rem;
-    padding: 15px
+    padding: 15px;
 }
 
 .weather-container,
@@ -66,8 +66,79 @@ header {
 .wind_speed-container,
 .feels_like-container,
 .chanceOfRain-container,
-.weather-temp-container,
 .weather-description-container {
     font-size: 2rem;
     font-weight: 900;
+}
+
+.weather-temp-container {
+    font-size: 4rem;
+}
+
+.weather-data-group-one {
+    text-align: justify;
+}
+
+.search-box-container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.search-input {
+    width: 17%;
+    margin: 5px;
+    padding: 5px;
+    text-align: center;
+    border-radius: 2px;
+    outline: none;
+    border: none;
+    font-size: 1.3rem;
+    color: #8a2be2;
+    font-weight: bold;
+    font-family: 'IM Fell DW Pica', serif;
+}
+
+.search-btn {
+    margin: 10px;
+    padding: 5px;
+    width: 8%;
+    color: #ffddae;
+    background-color: #0e001b;
+    outline: none;
+    border: 2px #ffddae solid;
+    border-radius: 3px;
+    cursor: pointer;
+    font-family: 'IM Fell DW Pica', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.search-btn:hover,
+.temp-toggle-btn:hover {
+    color: #0e001b;
+    background-color: #ffddae;
+    border: 1px #0e001b;
+    border-style: double inset;
+}
+
+.temp-toggle-btn {
+    position: absolute;
+    left: 15%;
+    top: 42%;
+    margin: 10px;
+    padding: 5px;
+    width: 8%;
+    color: #ffddae;
+    background-color: #0e001b;
+    outline: none;
+    border: 2px #ffddae solid;
+    border-radius: 3px;
+    cursor: pointer;
+    font-family: 'IM Fell DW Pica', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: capitalize;
 }
