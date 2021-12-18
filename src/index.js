@@ -12,6 +12,7 @@ const searchBtn = document.createElement("button");
 const defaultWeatherContainer = document.createElement("section");
 const errorContainer = document.createElement("div");
 const temperatureBtn = document.createElement("button");
+const queryContainer = document.createElement("div");
 let fetchedDataInFahrenheit;
 let fetchedDataInCelsius;
 
@@ -19,16 +20,12 @@ queryLocation.setAttribute("type", "text");
 queryLocation.setAttribute("class", "search");
 errorContainer.setAttribute("class", "error-info");
 temperatureBtn.setAttribute("class", "temp-toggle-btn");
+queryContainer.setAttribute("class", "search-box-container");
 searchBtn.textContent = "Search";
 temperatureBtn.textContent = "Display \xB0F";
+queryContainer.append(queryLocation, searchBtn, temperatureBtn);
 defaultWeatherContainer.append(showDefaultWeather());
-content.append(
-  pageHeader(),
-  defaultWeatherContainer,
-  queryLocation,
-  searchBtn,
-  temperatureBtn
-);
+content.append(pageHeader(), defaultWeatherContainer, queryContainer);
 
 searchBtn.addEventListener("click", () => {
   const userQuery = queryLocation.value.toLocaleLowerCase();
