@@ -11,6 +11,8 @@ body {
     background-size: cover;
     color: #ffddae;
     font-family: 'IM Fell DW Pica', serif;
+    font-size: 1.5rem;
+
 }
 
 header {
@@ -33,11 +35,11 @@ header {
     padding: 15px
 }
 
-.weather-container {
+.weather-container,
+.error-info {
     display: flex;
-    justify-content: space-between;
-    padding: 0 40px;
-    margin-top: 10px;
+    justify-content: space-evenly;
+    margin-top: 50px;
 }
 
 .weather-main-icon-container {
@@ -68,10 +70,4 @@ header {
 .weather-description-container {
     font-size: 2rem;
     font-weight: 900;
-}
-
-.weather-date-container,
-.weather-time-container,
-.weather-locationName-container {
-    font-size: 1.5rem;
 }
