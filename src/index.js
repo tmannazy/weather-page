@@ -51,10 +51,10 @@ async function displayReceivedData(query) {
     fetchedDataInCelsius = parseFetchedUserWeatherQuery;
     defaultWeatherContainer.textContent = "";
     defaultWeatherContainer.append(
-      showContentOfWeather(
-        parseFetchedUserWeatherQuery,
-        fetchedDataInFahrenheit
-      )
+      showContentOfWeather({
+        fetchedWeather: parseFetchedUserWeatherQuery,
+        weatherDataInFahrenheit: fetchedDataInFahrenheit,
+      })
     );
   } catch (error) {
     if (defaultWeatherContainer.textContent.match(/\bnetwork error\b/i)) {
