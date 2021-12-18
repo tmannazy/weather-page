@@ -183,20 +183,12 @@ const showContentOfWeather = (fetchedWeather, weatherDataInFahrenheit) => {
         weatherPageSecondData.append(containerTitle, containerContent);
         break;
       case "chanceOfRain":
-        if (!weatherDataInFahrenheit.rain === undefined) {
-          const rain = weatherDataInFahrenheit.rain["1h"];
-          containerContent.textContent = `${rain}%`;
-          containerTitle.textContent = "chance of rain";
-          containerContent.className = `${item}-container`;
-          containerTitle.className = `${item}-title`;
-          weatherPageSecondData.append(containerTitle, containerContent);
-        } else {
-          containerContent.textContent = "0%";
-          containerTitle.textContent = "chance of rain";
-          containerContent.className = `${item}-container`;
-          containerTitle.className = `${item}-title`;
-          weatherPageSecondData.append(containerTitle, containerContent);
-        }
+        const { pop } = fetchedWeather.daily[0];
+        containerContent.textContent = `${pop}%`;
+        containerTitle.textContent = "chance of rain";
+        containerContent.className = `${item}-container`;
+        containerTitle.className = `${item}-title`;
+        weatherPageSecondData.append(containerTitle, containerContent);
         break;
     }
   });
