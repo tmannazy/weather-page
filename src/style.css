@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=IM+Fell+DW+Pica&family=Twinkle+Star&display=swap');
+
 * {
     margin: 0;
     padding: 0;
@@ -8,11 +10,13 @@ body {
     background: url('../dist/ece9ef7c769feae06fd5.jpg');
     background-size: cover;
     color: #ffddae;
+    font-family: 'IM Fell DW Pica', serif;
 }
 
 header {
     display: flex;
     justify-content: center;
+    font-family: 'Fredoka One', cursive;
 }
 
 .page-icon {
@@ -35,4 +39,28 @@ header {
     padding: 0 40px;
     margin-top: 10px;
 
+}
+
+.humidity-title,
+.wind_speed-title,
+.feels_like-title,
+.chanceOfRain-title {
+    font-family: 'Twinkle Star', cursive;
+    font-size: 1.5rem;
+    text-transform: lowercase;
+}
+
+.humidity-container,
+.wind_speed-container,
+.feels_like-container,
+.chanceOfRain-container,
+.weather-temp-container {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.weather-date-container,
+.weather-time-container,
+.weather-locationName-container {
+    font-size: 1.5rem;
 }
