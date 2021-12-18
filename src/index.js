@@ -73,6 +73,7 @@ searchBtn.addEventListener("click", () => {
 temperatureBtn.addEventListener("click", (e) => {
   const getTempContainer = document.querySelector(".weather-temp-container");
   const getFeelsLikeContainer = document.querySelector(".feels_like-container");
+  const getWindSpeedContainer = document.querySelector(".wind_speed-container");
 
   if (e.target.textContent === "Display °F") {
     e.target.textContent = "Display \xB0C";
@@ -82,6 +83,7 @@ temperatureBtn.addEventListener("click", (e) => {
     getFeelsLikeContainer.textContent = `${Math.ceil(
       fetchedDataInFahrenheit.main.feels_like
     )} \xB0F`;
+    getWindSpeedContainer.textContent = `${fetchedDataInFahrenheit.wind.speed} mph`;
   } else {
     e.target.textContent = "Display \xB0F";
     getTempContainer.textContent = `${Math.ceil(
@@ -90,5 +92,8 @@ temperatureBtn.addEventListener("click", (e) => {
     getFeelsLikeContainer.textContent = `${Math.ceil(
       fetchedDataInCelsius.current.feels_like
     )} \xB0C`;
+    getWindSpeedContainer.textContent = `${(
+      fetchedDataInCelsius.current.wind_speed * 3.6
+    ).toFixed(1)} km/h`;
   }
 });
