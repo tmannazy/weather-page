@@ -38,7 +38,17 @@ header {
     justify-content: space-between;
     padding: 0 40px;
     margin-top: 10px;
+}
 
+.weather-main-icon-container {
+    text-align: center;
+    text-transform: capitalize;
+}
+
+.main-icon {
+    object-fit: cover;
+    width: 150px;
+    height: 150px;
 }
 
 .humidity-title,
@@ -54,9 +64,10 @@ header {
 .wind_speed-container,
 .feels_like-container,
 .chanceOfRain-container,
-.weather-temp-container {
+.weather-temp-container,
+.weather-description-container {
     font-size: 2rem;
-    font-weight: 700;
+    font-weight: 900;
 }
 
 .weather-date-container,
