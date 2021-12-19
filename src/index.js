@@ -1,5 +1,9 @@
 import { pageHeader } from "./header";
-import { showDefaultWeather, showContentOfWeather } from "./heroContent";
+import {
+  showDefaultWeather,
+  showContentOfWeather,
+  postDefaultWeatherData,
+} from "./heroContent";
 import "./style.css";
 function requireAll(r) {
   r.keys().forEach(r);
@@ -54,7 +58,7 @@ async function displayReceivedData(query) {
     defaultWeatherContainer.textContent = "";
     defaultWeatherContainer.append(
       showContentOfWeather({
-        fetchedWeather: parseFetchedUserWeatherQuery,
+        fetchedWeatherInCelsius: parseFetchedUserWeatherQuery,
         weatherDataInFahrenheit: fetchedDataInFahrenheit,
       })
     );
@@ -74,23 +78,27 @@ async function displayReceivedData(query) {
   }
 }
 
-function requestingImg() {
-  loadingImg.src = "./e157bc007c2f7fc44591.webp";
-  loadingImg.style.display = "block";
-  content.append(loadingImg);
-}
-
 searchBtn.addEventListener("click", () => {
   requestingImg();
   const userQuery = queryLocation.value.toLocaleLowerCase();
   displayReceivedData(userQuery);
 });
 
+const requestingImg = () => {
+  loadingImg.src = "./e157bc007c2f7fc44591.webp";
+  loadingImg.style.display = "block";
+  content.append(loadingImg);
+};
+
 temperatureBtn.addEventListener("click", (e) => {
   const getTempContainer = document.querySelector(".weather-temp-container");
   const getFeelsLikeContainer = document.querySelector(".feels_like-container");
   const getWindSpeedContainer = document.querySelector(".wind_speed-container");
-
+  if (fetchedDataInFahrenheit === undefined) {
+    const parsePostedDefaultData = postDefaultWeatherData();
+    fetchedDataInFahrenheit = parsePostedDefaultData.fahrenheitData;
+    fetchedDataInCelsius = parsePostedDefaultData.celsiusData;
+  }
   if (e.target.textContent === "Display °F") {
     e.target.textContent = "Display \xB0C";
     getTempContainer.textContent = `${Math.ceil(
