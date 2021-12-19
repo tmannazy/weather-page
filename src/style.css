@@ -186,7 +186,7 @@ header {
     }
 
     .temp-toggle-btn {
-        top: 52%;
+        top: 50%;
         left: 25%;
     }
 
@@ -209,6 +209,6 @@ header {
 
 @media only screen and (min-width: 1080px) {
     .temp-toggle-btn {
-        top: 55%
+        top: 47%
     }
 }
