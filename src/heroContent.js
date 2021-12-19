@@ -79,8 +79,11 @@ const showContentOfWeather = ({
   };
 
   const dateInTimestamp = new Date(fetchedWeather.current.dt * 1000);
+  const userTimezone = new Date(
+    (fetchedWeather.current.dt + fetchedWeather.timezone_offset) * 1000
+  );
   const formattedDate = new Intl.DateTimeFormat("en-US", dateOptions).format(
-    new Date(fetchedWeather.current.sunrise * 1000)
+    userTimezone
   );
 
   const fetchedLocationTime = new Intl.DateTimeFormat(
