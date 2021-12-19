@@ -159,3 +159,54 @@ header {
     border-top-color: #8a2be2;
     border-style: inset groove;
 }
+
+@media only screen and (max-width: 1080px) {
+    .page-title {
+        padding: 15px 15px;
+        text-align: center;
+    }
+
+    .weather-container {
+        flex-direction: column;
+    }
+
+    .weather-data-group-one {
+        text-align: center;
+    }
+
+    .weather-data-group-two {
+        text-align: center;
+        margin-top: 50px;
+    }
+
+    .weather-main-icon-container {
+        margin-top: 50px;
+    }
+
+    .temp-toggle-btn {
+        top: 52%;
+        left: 25%;
+    }
+
+    .search-input {
+        width: 250px;
+    }
+
+    .search-btn,
+    .temp-toggle-btn {
+        width: 190px;
+    }
+
+    .load-img {
+        top: 100%;
+        left: 20%;
+        height: 300px;
+        width: 250px;
+    }
+}
+
+@media only screen and (min-width: 1080px) {
+    .temp-toggle-btn {
+        top: 55%
+    }
+}
