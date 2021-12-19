@@ -14,6 +14,8 @@ const weatherPageData = document.createElement("div");
 const weatherPageSecondData = document.createElement("div");
 const weatherIcon = document.createElement("div");
 const iconImg = document.createElement("img");
+let fahrenheitData;
+let celsiusData;
 
 displayWeatherRetrieved.className = "weather-container";
 weatherPageData.className = "weather-data-group-one";
@@ -35,14 +37,18 @@ const showDefaultWeather = () => {
           { mode: "cors" }
         );
         const defaultWeatherName = await fetch(
-          "https://api.openweathermap.org/data/2.5/weather?lat=10&lon=8&units=metric&appid=42cb9ecb74688a62504925b13afb6382",
+          "https://api.openweathermap.org/data/2.5/weather?lat=10&lon=8&units=imperial&appid=42cb9ecb74688a62504925b13afb6382",
           { mode: "cors" }
         );
-        const getDefaultWeatherData = await weatherData.json();
-        const storeDefaultWeatherName = await defaultWeatherName.json();
+        const getDefaultWeatherDataInCelsius = await weatherData.json();
+        const getDefaultWeatherDataInFahrenheit =
+          await defaultWeatherName.json();
+        fahrenheitData = getDefaultWeatherDataInFahrenheit;
+        celsiusData = getDefaultWeatherDataInCelsius;
+
         showContentOfWeather({
-          fetchedWeather: getDefaultWeatherData,
-          weatherDataInFahrenheit: storeDefaultWeatherName,
+          fetchedWeatherInCelsius: getDefaultWeatherDataInCelsius,
+          weatherDataInFahrenheit: getDefaultWeatherDataInFahrenheit,
         });
       } catch (error) {
         displayWeatherRetrieved.textContent =
@@ -56,7 +62,7 @@ const showDefaultWeather = () => {
 };
 
 const showContentOfWeather = ({
-  fetchedWeather,
+  fetchedWeatherInCelsius,
   weatherDataInFahrenheit,
 } = {}) => {
   displayWeatherRetrieved.textContent = "";
@@ -75,12 +81,14 @@ const showContentOfWeather = ({
     hour: "numeric",
     minute: "numeric",
     hour12: true,
-    timeZone: fetchedWeather.timezone,
+    timeZone: fetchedWeatherInCelsius.timezone,
   };
 
-  const dateInTimestamp = new Date(fetchedWeather.current.dt * 1000);
+  const dateInTimestamp = new Date(fetchedWeatherInCelsius.current.dt * 1000);
   const userTimezone = new Date(
-    (fetchedWeather.current.dt + fetchedWeather.timezone_offset) * 1000
+    (fetchedWeatherInCelsius.current.dt +
+      fetchedWeatherInCelsius.timezone_offset) *
+      1000
   );
   const formattedDate = new Intl.DateTimeFormat("en-US", dateOptions).format(
     userTimezone
@@ -91,7 +99,7 @@ const showContentOfWeather = ({
     timeOptions
   ).format(dateInTimestamp);
 
-  const { icon } = fetchedWeather.current.weather[0];
+  const { icon } = fetchedWeatherInCelsius.current.weather[0];
   iconImg.src = `http://openweathermap.org/img/wn/${icon}@2x.png`;
   weatherIcon.appendChild(iconImg);
 
@@ -106,7 +114,7 @@ const showContentOfWeather = ({
         weatherIcon.appendChild(containerContent);
         break;
       case "description":
-        const { description } = fetchedWeather.current.weather[0];
+        const { description } = fetchedWeatherInCelsius.current.weather[0];
         containerContent.textContent = description;
         containerContent.className = `weather-${item}-container`;
         weatherIcon.appendChild(containerContent);
@@ -123,14 +131,14 @@ const showContentOfWeather = ({
         break;
       case "temp":
         containerContent.textContent = `${Math.ceil(
-          fetchedWeather.current.temp
+          fetchedWeatherInCelsius.current.temp
         )} \xB0C`;
         containerContent.className = `weather-${item}-container`;
         weatherPageData.appendChild(containerContent);
         break;
       case "feels_like":
         containerContent.textContent = `${Math.floor(
-          fetchedWeather.current.feels_like
+          fetchedWeatherInCelsius.current.feels_like
         )} \xB0C`;
         containerTitle.textContent = "feels like";
         containerContent.className = `${item}-container`;
@@ -138,14 +146,14 @@ const showContentOfWeather = ({
         weatherPageSecondData.append(containerTitle, containerContent);
         break;
       case "humidity":
-        containerContent.textContent = `${fetchedWeather.current.humidity}%`;
+        containerContent.textContent = `${fetchedWeatherInCelsius.current.humidity}%`;
         containerTitle.textContent = "humidity";
         containerContent.className = `${item}-container`;
         containerTitle.className = `${item}-title`;
         weatherPageSecondData.append(containerTitle, containerContent);
         break;
       case "wind_speed":
-        const speed = fetchedWeather.current.wind_speed * 3.6;
+        const speed = fetchedWeatherInCelsius.current.wind_speed * 3.6;
         containerContent.textContent = `${speed.toFixed(1)} km/h`;
         containerTitle.textContent = "wind speed";
         containerContent.className = `${item}-container`;
@@ -153,7 +161,7 @@ const showContentOfWeather = ({
         weatherPageSecondData.append(containerTitle, containerContent);
         break;
       case "chanceOfRain":
-        const { pop } = fetchedWeather.daily[0];
+        const { pop } = fetchedWeatherInCelsius.daily[0];
         containerContent.textContent = `${pop}%`;
         containerTitle.textContent = "chance of rain";
         containerContent.className = `${item}-container`;
@@ -171,4 +179,8 @@ const showContentOfWeather = ({
   return displayWeatherRetrieved;
 };
 
-export { showDefaultWeather, showContentOfWeather };
+const postDefaultWeatherData = () => {
+  return { fahrenheitData, celsiusData };
+};
+
+export { showDefaultWeather, showContentOfWeather, postDefaultWeatherData };
